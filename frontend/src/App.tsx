@@ -1,10 +1,24 @@
+import { useState } from 'react';
 import { ToastContainer } from './components/ToastContainer';
 import { LoadingSpinner } from './components/LoadingSpinner';
 import { LogsTable } from './components/LogsTable';
+import { AddLogModal } from './components/AddLogModal';
 import { useLogs } from './hooks/useLogs';
 
 function App() {
-  const { logs, loading, error, updateLog, deleteLog } = useLogs();
+  const { logs, loading, error, createLog, updateLog, deleteLog } = useLogs();
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isCreating, setIsCreating] = useState(false);
+
+  const handleCreateLog = async (owner: string, logText: string) => {
+    setIsCreating(true);
+    try {
+      await createLog({ owner, logText });
+      setIsAddModalOpen(false);
+    } finally {
+      setIsCreating(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -67,13 +81,39 @@ function App() {
               <LoadingSpinner />
             ) : (
               <div className="p-4 sm:p-6">
-                <div className="mb-4 flex items-center justify-between">
+                <div className="mb-4 flex items-center justify-between flex-wrap gap-3">
                   <h2 className="text-lg font-semibold text-gray-900">
                     System Logs
                     <span className="ml-2 text-sm font-normal text-gray-600">
                       ({logs.length} {logs.length === 1 ? 'entry' : 'entries'})
                     </span>
                   </h2>
+                  <button
+                    onClick={() => setIsAddModalOpen(true)}
+                    className="
+                      inline-flex items-center gap-2 px-4 py-2 text-sm font-medium
+                      text-white bg-blue-600 rounded-md hover:bg-blue-700
+                      focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
+                      transition-colors duration-200
+                    "
+                    aria-label="Create new log"
+                  >
+                    <svg
+                      className="w-5 h-5"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 4v16m8-8H4"
+                      />
+                    </svg>
+                    Create New Log
+                  </button>
                 </div>
                 <LogsTable logs={logs} onUpdate={updateLog} onDelete={deleteLog} />
               </div>
@@ -86,6 +126,13 @@ function App() {
       </footer>
 
       <ToastContainer />
+
+      <AddLogModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        onSubmit={handleCreateLog}
+        isCreating={isCreating}
+      />
     </div>
   );
 }
