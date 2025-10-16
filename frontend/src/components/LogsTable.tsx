@@ -7,7 +7,7 @@ import { usePagination } from '../hooks/usePagination';
 
 interface LogsTableProps {
   logs: Log[];
-  onUpdate: (id: string, data: { owner?: string; logText?: string }) => Promise<void>;
+  onUpdate: (id: string, data: { owner?: string; logText?: string }) => Promise<Log | void>;
   onDelete: (id: string) => Promise<void>;
 }
 
