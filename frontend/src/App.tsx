@@ -21,7 +21,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 flex flex-col">
       <header className="bg-white shadow-sm border-b border-gray-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div className="flex items-center justify-between">
@@ -49,7 +49,7 @@ function App() {
           </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
           {error && (
             <div
               className="mb-6 bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg"
@@ -121,7 +121,7 @@ function App() {
           </div>
       </main>
 
-      <footer className="mt-12 pb-8 text-center text-sm text-gray-600">
+      <footer className="mt-auto py-6 text-center text-sm text-gray-600 border-t border-gray-200">
         <p>Built with React, TypeScript, and Tailwind CSS</p>
       </footer>
 
