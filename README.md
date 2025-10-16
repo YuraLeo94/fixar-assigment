@@ -4,7 +4,7 @@ A full-stack web application for managing system logs built with React, TypeScri
 
 > Technical assessment project for Fixar
 
-**Repository:** https://github.com/YuraLeo94/fixar-assignment
+**Repository:** https://github.com/YuraLeo94/fixar-assigment
 
 ## Features
 
@@ -32,8 +32,8 @@ A full-stack web application for managing system logs built with React, TypeScri
 
 ```bash
 # Clone the repository
-git clone https://github.com/YuraLeo94/fixar-assignment.git
-cd fixar-assignment
+git clone https://github.com/YuraLeo94/fixar-assigment.git
+cd fixar-assigment
 
 # Install dependencies
 cd backend && npm install
@@ -61,7 +61,7 @@ cd frontend && npm test
 ## Project Structure
 
 ```
-fixar-assignment/
+fixar-assigment/
 ├── frontend/
 │   ├── src/
 │   │   ├── __tests__/          # Test files
