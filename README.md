@@ -62,7 +62,7 @@ cd frontend && npm test
 
 ```
 fixar-assigment/
-├── frontend/
+├── frontend/                   # React frontend
 │   ├── src/
 │   │   ├── __tests__/          # Test files
 │   │   ├── api/                # API service layer
@@ -70,13 +70,14 @@ fixar-assigment/
 │   │   ├── contexts/           # React contexts
 │   │   ├── hooks/              # Custom hooks
 │   │   └── types/              # TypeScript types
-│   ├── package.json
-│   └── vite.config.ts
-├── backend/
+│   └── package.json
+├── backend/                    # Express server (local dev)
 │   ├── src/
-│   │   └── index.ts            # Express server
-│   ├── package.json
-│   └── tsconfig.json
+│   │   └── index.ts
+│   └── package.json
+├── api/                        # Vercel serverless wrapper
+│   └── index.ts                # Wraps Express backend
+├── vercel.json                 # Vercel configuration
 └── README.md
 ```
 

@@ -173,7 +173,13 @@ app.get('/health', (req: Request, res: Response) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server is running on http://localhost:${PORT}`);
-  console.log(`📊 API endpoints available at http://localhost:${PORT}/api/logs`);
-});
+// Export for Vercel serverless
+export default app;
+
+// Only start server in development
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`🚀 Server is running on http://localhost:${PORT}`);
+    console.log(`📊 API endpoints available at http://localhost:${PORT}/api/logs`);
+  });
+}
