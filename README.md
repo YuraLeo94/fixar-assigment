@@ -71,12 +71,12 @@ fixar-assigment/
 │   │   ├── hooks/              # Custom hooks
 │   │   └── types/              # TypeScript types
 │   └── package.json
-├── backend/                    # Express server (local dev)
+├── backend/                    # Express backend (shared code)
 │   ├── src/
-│   │   └── index.ts
+│   │   └── index.ts            # Express app (used locally & on Vercel)
 │   └── package.json
-├── api/                        # Vercel serverless wrapper
-│   └── index.ts                # Wraps Express backend
+├── api/                        # Vercel serverless entry point
+│   └── index.ts                # Thin wrapper (imports backend)
 ├── vercel.json                 # Vercel configuration
 └── README.md
 ```
@@ -113,9 +113,14 @@ npm run test:coverage # Coverage report
    vercel
    ```
 
+**Architecture:**
+- **Backend folder** contains the Express app (single source of truth)
+- **API folder** is just a thin wrapper that imports the backend for Vercel
+- **No code duplication** - same backend runs locally and on Vercel
+
 **Note:** Zero configuration needed! The app automatically detects the environment:
-- **Local dev:** Uses `http://localhost:3000/api`
-- **Production:** Uses relative `/api` path
+- **Local dev:** Uses `http://localhost:3000/api` (runs `backend/src/index.ts`)
+- **Production:** Uses relative `/api` path (Vercel runs `api/index.ts` which imports backend)
 
 No environment variables required on Vercel!
 
