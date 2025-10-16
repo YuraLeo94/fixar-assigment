@@ -4,6 +4,8 @@ A full-stack web application for managing system logs built with React, TypeScri
 
 > Technical assessment project for Fixar
 
+**Live Demo:** https://fixar-assigment.vercel.app/
+
 **Repository:** https://github.com/YuraLeo94/fixar-assigment
 
 ## Features
@@ -90,39 +92,6 @@ npm test              # Run all tests
 npm test -- --watch   # Watch mode
 npm run test:coverage # Coverage report
 ```
-
-## Deployment
-
-### Deploy to Vercel
-
-1. **Install Vercel CLI** (optional)
-   ```bash
-   npm install -g vercel
-   ```
-
-2. **Deploy via GitHub** (Recommended)
-   - Push your code to GitHub
-   - Go to [vercel.com](https://vercel.com)
-   - Click "New Project"
-   - Import your GitHub repository
-   - Vercel will auto-detect the configuration from `vercel.json`
-   - Click "Deploy"
-
-3. **Deploy via CLI**
-   ```bash
-   vercel
-   ```
-
-**Architecture:**
-- **Backend folder** contains the Express app (single source of truth)
-- **API folder** is just a thin wrapper that imports the backend for Vercel
-- **No code duplication** - same backend runs locally and on Vercel
-
-**Note:** Zero configuration needed! The app automatically detects the environment:
-- **Local dev:** Uses `http://localhost:3000/api` (runs `backend/src/index.ts`)
-- **Production:** Uses relative `/api` path (Vercel runs `api/index.ts` which imports backend)
-
-No environment variables required on Vercel!
 
 ---
 
