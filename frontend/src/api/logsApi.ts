@@ -1,6 +1,8 @@
 import type { Log, CreateLogDto, UpdateLogDto } from '../types/log';
 
-const API_BASE_URL = 'http://localhost:3000/api';
+// Automatically uses the right API URL based on environment
+const API_BASE_URL = import.meta.env.VITE_API_URL ||
+  (import.meta.env.DEV ? 'http://localhost:3000/api' : '/api');
 
 export const logsApi = {
   async getAllLogs(): Promise<Log[]> {

@@ -90,6 +90,34 @@ npm test -- --watch   # Watch mode
 npm run test:coverage # Coverage report
 ```
 
+## Deployment
+
+### Deploy to Vercel
+
+1. **Install Vercel CLI** (optional)
+   ```bash
+   npm install -g vercel
+   ```
+
+2. **Deploy via GitHub** (Recommended)
+   - Push your code to GitHub
+   - Go to [vercel.com](https://vercel.com)
+   - Click "New Project"
+   - Import your GitHub repository
+   - Vercel will auto-detect the configuration from `vercel.json`
+   - Click "Deploy"
+
+3. **Deploy via CLI**
+   ```bash
+   vercel
+   ```
+
+**Note:** Zero configuration needed! The app automatically detects the environment:
+- **Local dev:** Uses `http://localhost:3000/api`
+- **Production:** Uses relative `/api` path
+
+No environment variables required on Vercel!
+
 ---
 
 **Author:** [YuraLeo94](https://github.com/YuraLeo94)
