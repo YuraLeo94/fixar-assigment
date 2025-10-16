@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { LogsTable } from '../../components/LogsTable';
 import type { Log } from '../../types/log';
@@ -72,19 +72,17 @@ describe('LogsTable', () => {
     expect(deleteButtons[0]).toHaveAttribute('aria-label', 'Delete log by Alice');
   });
 
-  it.skip('should call onDelete when delete is confirmed', async () => {
+  it('should call onDelete when delete is confirmed', async () => {
     const user = userEvent.setup();
     mockOnDelete.mockResolvedValue(undefined);
 
     render(<LogsTable logs={mockLogs} onUpdate={mockOnUpdate} onDelete={mockOnDelete} />);
 
     const deleteButtons = screen.getAllByRole('button', { name: /delete log by/i });
-    act(() => {
-      fireEvent.click(deleteButtons[0]);
-    });
+    await user.click(deleteButtons[0]);
 
     // Wait for modal to appear
-    expect(await screen.findByText('Delete Log', {}, { timeout: 3000 })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: 'Delete Log' })).toBeInTheDocument();
 
     const confirmButton = screen.getByRole('button', { name: /^delete$/i });
     await user.click(confirmButton);
@@ -94,24 +92,22 @@ describe('LogsTable', () => {
     });
   });
 
-  it.skip('should close delete modal when cancel is clicked', async () => {
+  it('should close delete modal when cancel is clicked', async () => {
     const user = userEvent.setup();
 
     render(<LogsTable logs={mockLogs} onUpdate={mockOnUpdate} onDelete={mockOnDelete} />);
 
     const deleteButtons = screen.getAllByRole('button', { name: /delete log by/i });
-    act(() => {
-      fireEvent.click(deleteButtons[0]);
-    });
+    await user.click(deleteButtons[0]);
 
     // Wait for modal to appear
-    expect(await screen.findByText('Delete Log', {}, { timeout: 3000 })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: 'Delete Log' })).toBeInTheDocument();
 
     const cancelButton = screen.getByRole('button', { name: /cancel/i });
     await user.click(cancelButton);
 
     await waitFor(() => {
-      expect(screen.queryByText('Delete Log')).not.toBeInTheDocument();
+      expect(screen.queryByRole('heading', { name: 'Delete Log' })).not.toBeInTheDocument();
     });
 
     expect(mockOnDelete).not.toHaveBeenCalled();
@@ -130,14 +126,14 @@ describe('LogsTable', () => {
     await user.clear(input);
     await user.type(input, 'Updated Alice');
 
-    fireEvent.blur(input);
+    await user.tab();
 
     await waitFor(() => {
       expect(mockOnUpdate).toHaveBeenCalledWith('1', { owner: 'Updated Alice' });
     });
   });
 
-  it.skip('should show loading state during deletion', async () => {
+  it('should show loading state during deletion', async () => {
     const user = userEvent.setup();
     mockOnDelete.mockImplementation(
       () => new Promise((resolve) => setTimeout(resolve, 100))
@@ -146,12 +142,10 @@ describe('LogsTable', () => {
     render(<LogsTable logs={mockLogs} onUpdate={mockOnUpdate} onDelete={mockOnDelete} />);
 
     const deleteButtons = screen.getAllByRole('button', { name: /delete log by/i });
-    act(() => {
-      fireEvent.click(deleteButtons[0]);
-    });
+    await user.click(deleteButtons[0]);
 
     // Wait for modal to appear
-    expect(await screen.findByText('Delete Log', {}, { timeout: 3000 })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: 'Delete Log' })).toBeInTheDocument();
 
     const confirmButton = screen.getByRole('button', { name: /^delete$/i });
     await user.click(confirmButton);
@@ -180,7 +174,7 @@ describe('LogsTable', () => {
     const input = screen.getByRole('textbox', { name: /edit field/i });
     await user.clear(input);
     await user.type(input, 'New Name');
-    fireEvent.blur(input);
+    await user.tab();
 
     await waitFor(() => {
       expect(consoleErrorSpy).toHaveBeenCalledWith(
@@ -192,7 +186,7 @@ describe('LogsTable', () => {
     consoleErrorSpy.mockRestore();
   });
 
-  it.skip('should handle delete errors gracefully', async () => {
+  it('should handle delete errors gracefully', async () => {
     const user = userEvent.setup();
     const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation();
     mockOnDelete.mockRejectedValue(new Error('Delete failed'));
@@ -200,12 +194,10 @@ describe('LogsTable', () => {
     render(<LogsTable logs={mockLogs} onUpdate={mockOnUpdate} onDelete={mockOnDelete} />);
 
     const deleteButtons = screen.getAllByRole('button', { name: /delete log by/i });
-    act(() => {
-      fireEvent.click(deleteButtons[0]);
-    });
+    await user.click(deleteButtons[0]);
 
     // Wait for modal to appear
-    expect(await screen.findByText('Delete Log', {}, { timeout: 3000 })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: 'Delete Log' })).toBeInTheDocument();
 
     const confirmButton = screen.getByRole('button', { name: /^delete$/i });
     await user.click(confirmButton);
