@@ -1,8 +1,7 @@
 import type { Log, CreateLogDto, UpdateLogDto } from '../types/log';
 
-// Automatically uses the right API URL based on environment
-const API_BASE_URL = import.meta.env.VITE_API_URL ||
-  (import.meta.env.DEV ? 'http://localhost:3000/api' : '/api');
+// API base URL - works in dev (Vite proxy), prod (Vercel), and tests
+const API_BASE_URL = '/api';
 
 export const logsApi = {
   async getAllLogs(): Promise<Log[]> {
