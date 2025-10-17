@@ -106,7 +106,7 @@ let logs: Log[] = [
 ];
 
 // GET /api/logs - Fetch all logs
-app.get('/api/logs', (req: Request, res: Response) => {
+app.get('/api/logs', (_req: Request, res: Response) => {
   res.json(logs);
 });
 
@@ -127,7 +127,7 @@ app.post('/api/logs', (req: Request, res: Response) => {
   };
 
   logs.push(newLog);
-  res.status(201).json(newLog);
+  return res.status(201).json(newLog);
 });
 
 // PUT /api/logs/:id - Update a log
@@ -151,7 +151,7 @@ app.put('/api/logs/:id', (req: Request, res: Response) => {
 
   logs[logIndex].updatedAt = new Date().toISOString();
 
-  res.json(logs[logIndex]);
+  return res.json(logs[logIndex]);
 });
 
 // DELETE /api/logs/:id - Delete a log
@@ -165,11 +165,11 @@ app.delete('/api/logs/:id', (req: Request, res: Response) => {
   }
 
   logs.splice(logIndex, 1);
-  res.status(204).send();
+  return res.status(204).send();
 });
 
 // Health check endpoint
-app.get('/health', (req: Request, res: Response) => {
+app.get('/health', (_req: Request, res: Response) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
