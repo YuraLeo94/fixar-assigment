@@ -93,6 +93,10 @@ npm test -- --watch   # Watch mode
 npm run test:coverage # Coverage report
 ```
 
+## Design Notes
+
+**Inline Editing UX:** The task requirements specify editable fields directly in the table (Owner and Log Text columns). While this implementation meets the requirements, inline editing in tables is not optimal for mobile UX. In a production application, a better approach would be using a dedicated edit modal or form, especially for mobile devices. The current implementation prioritizes meeting the assignment specifications while maintaining responsive card layouts for smaller screens.
+
 ---
 
 **Author:** [YuraLeo94](https://github.com/YuraLeo94)
