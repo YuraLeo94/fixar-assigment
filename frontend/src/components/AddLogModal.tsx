@@ -20,23 +20,23 @@ export function AddLogModal({
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (isOpen) {
-      ownerInputRef.current?.focus();
-      document.body.style.overflow = 'hidden';
+    if (!isOpen) return;
 
-      const handleEscape = (e: KeyboardEvent) => {
-        if (e.key === 'Escape') {
-          handleClose();
-        }
-      };
+    ownerInputRef.current?.focus();
+    document.body.style.overflow = 'hidden';
 
-      document.addEventListener('keydown', handleEscape);
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        handleClose();
+      }
+    };
 
-      return () => {
-        document.body.style.overflow = 'unset';
-        document.removeEventListener('keydown', handleEscape);
-      };
-    }
+    document.addEventListener('keydown', handleEscape);
+
+    return () => {
+      document.body.style.overflow = 'unset';
+      document.removeEventListener('keydown', handleEscape);
+    };
   }, [isOpen]);
 
   const handleClose = () => {

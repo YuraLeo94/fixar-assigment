@@ -19,27 +19,27 @@ export function DeleteModal({
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (isOpen) {
-      // Focus the cancel button when modal opens
-      cancelButtonRef.current?.focus();
+    if (!isOpen) return;
 
-      // Prevent body scroll
-      document.body.style.overflow = 'hidden';
+    // Focus the cancel button when modal opens
+    cancelButtonRef.current?.focus();
 
-      // Handle Escape key
-      const handleEscape = (e: KeyboardEvent) => {
-        if (e.key === 'Escape') {
-          onClose();
-        }
-      };
+    // Prevent body scroll
+    document.body.style.overflow = 'hidden';
 
-      document.addEventListener('keydown', handleEscape);
+    // Handle Escape key
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
 
-      return () => {
-        document.body.style.overflow = 'unset';
-        document.removeEventListener('keydown', handleEscape);
-      };
-    }
+    document.addEventListener('keydown', handleEscape);
+
+    return () => {
+      document.body.style.overflow = 'unset';
+      document.removeEventListener('keydown', handleEscape);
+    };
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
